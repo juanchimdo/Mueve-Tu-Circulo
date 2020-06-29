@@ -18,6 +18,9 @@
 	width: 6em;
 	background: red;
 	border-radius: 100%;
+	transition-duration: 0.5s;
+	top: auto;
+	left: auto;
 }
 .colores {
 	position: absolute;

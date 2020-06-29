@@ -1,5 +1,8 @@
 document.addEventListener("DOMContentLoaded", function() {
-
+	const up = document.querySelector('.up')
+	const left = document.querySelector('.left')
+	const down = document.querySelector('.down')
+	const right = document.querySelector('.right')
 	const circulo = document.querySelector('.circulo')
 	const container = document.querySelector('.container')
 
@@ -20,6 +23,23 @@ document.addEventListener("DOMContentLoaded", function() {
 	}
 
 	const alea = setInterval(aleatorio,1000)
+
+	left.addEventListener('click', function(){
+		moverIzquierda()
+		clearInterval(alea)
+	})
+	right.addEventListener('click', function(){
+		moverDerecha()
+		clearInterval(alea)
+	})
+	down.addEventListener('click', function(){
+		moverAbajo()
+		clearInterval(alea)
+	})
+	up.addEventListener('click', function(){
+		moverArriba()
+		clearInterval(alea)
+	})
 
 	document.addEventListener('keydown', function (event) {
 		clearInterval(alea)
