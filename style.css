@@ -19,3 +19,68 @@
 	background: red;
 	border-radius: 100%;
 }
+.colores {
+	position: absolute;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-around;
+	height: 10%;
+	width: 20%;
+	top: 84%;
+	left: 77%;
+}
+.rojo{
+	background: red;
+	border-radius: 100%;
+	width: 5em;
+	height: 5em;
+	cursor: pointer;
+}
+.verde{
+	background: green;
+	border-radius: 100%;
+	width: 5em;
+	height: 5em;
+	cursor: pointer;
+}
+.azul{
+	background: blue;
+	border-radius: 100%;
+	width: 5em;
+	height: 5em;
+	cursor: pointer;
+}
+.tablero{
+	position: absolute;
+	display: flex;
+	height: 12%;
+	width: 15%;
+	top: 5%;
+	left: 80%;
+	align-items: flex-end;
+	justify-content: center;
+}
+.boton{
+	background: black;
+	color: white;
+	width: 3em;
+	height: 3em;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 30%;
+	cursor: pointer;
+	margin-left: 0.1em;
+}
+.up{
+	align-self: flex-start;
+	position: absolute;
+	-webkit-transform: rotate(90deg);
+}
+.right{
+	-webkit-transform: rotate(180deg);
+}
+.down{
+	-webkit-transform: rotate(270deg);
+}

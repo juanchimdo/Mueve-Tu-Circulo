@@ -19,9 +19,10 @@ document.addEventListener("DOMContentLoaded", function() {
 		}
 	}
 
-	setInterval(aleatorio,1000)
+	const alea = setInterval(aleatorio,1000)
 
 	document.addEventListener('keydown', function (event) {
+		clearInterval(alea)
 		const codigo = event.keyCode
 		if (codigo===37) {							// IZQUIERDA
 			moverIzquierda()
