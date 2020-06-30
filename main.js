@@ -1,28 +1,24 @@
 document.addEventListener("DOMContentLoaded", function() {
+
+	// ------------ VARIABLES ----------------//
+
 	const up = document.querySelector('.up')
 	const left = document.querySelector('.left')
 	const down = document.querySelector('.down')
 	const right = document.querySelector('.right')
 	const circulo = document.querySelector('.circulo')
 	const container = document.querySelector('.container')
+	const rojo = document.querySelector('.rojo')
+	const azul = document.querySelector('.azul')
+	const verde = document.querySelector('.verde')
 
-	function aleatorio(){
-		const random = Math.floor(Math.random() * 3)
-		if (random === 0) {
-			moverIzquierda()
-		}
-		if (random === 1) {
-			moverDerecha()
-		}
-		if (random === 2) {
-			moverAbajo()
-		}
-		if (random === 3) {
-			moverArriba()
-		}
-	}
 
-	const alea = setInterval(aleatorio,1000)
+	circulo.style.left = circulo.offsetLeft + 'px'
+	circulo.style.top= circulo.offsetTop + 'px'
+
+	const movement = 50
+
+	// ------------ EVENTOS ----------------//
 
 	left.addEventListener('click', function(){
 		moverIzquierda()
@@ -57,52 +53,104 @@ document.addEventListener("DOMContentLoaded", function() {
 			moverAbajo()
 		}
 	})
+	document.addEventListener('keydown', function (event) {
+		clearInterval(alea)
+		const codigo = event.keyCode
+		if (codigo===32) {
+			aleatorio()
+		}
+	})
+	document.addEventListener('keydown', function (event) {
+		clearInterval(alea)
+		const codigo = event.keyCode
+		if (codigo===13) {
+			alea = setInterval(aleatorio,500)
+		}
+	})
+
+	rojo.addEventListener('click', function(){
+		cambiarColor('red')
+	})
+	verde.addEventListener('click', function(){
+		cambiarColor('green')
+	})
+	azul.addEventListener('click', function(){
+		cambiarColor('blue')
+	})
+
+	// ------------ FUNCIONES ----------------//
+
+	let alea = setInterval(aleatorio,500)			// FUNCION INICIAL (ALEATORIO)
+
+	function aleatorio(){
+		const random = Math.floor(Math.random() * 4)
+		if (random === 0) {
+			moverIzquierda()
+		}
+		if (random === 1) {
+			moverDerecha()
+		}
+		if (random === 2) {
+			moverAbajo()
+		}
+		if (random === 3) {
+			moverArriba()
+		}
+		colorAleatorio()
+	}
 
 	function moverIzquierda(){
-		const diametro = circulo.offsetWidth
-		const ancho = container.offsetWidth
-		const movx = ancho/diametro
 		const izq = circulo.offsetLeft
-		const valor = izq - movx
-		if (izq>=movx) {
-			circulo.style.left = valor + 'px'
+		if (izq>movement) {
+			circulo.style.left = izq - movement + 'px'
+		}else{
+			circulo.style.left= '0px'
 		}
 	}
 
 	function moverArriba(){
-		const diametro = circulo.offsetWidth
-		const alto = container.offsetHeight
-		const movy = alto/diametro
 		const arriba = circulo.offsetTop
-		const valor = arriba - movy
-		if (arriba>=movy) {
-			circulo.style.top = valor + 'px'
+		if (arriba>movement) {
+			circulo.style.top = arriba - movement + 'px'
 		}else{
 			circulo.style.top= '0px'
 		}
 	}
 
 	function moverDerecha(){
-		const diametro = circulo.offsetWidth
 		const ancho = container.offsetWidth
-		const movx = ancho/diametro
-		const izq = circulo.offsetLeft
-		const valor = izq + movx
-		if (valor<ancho - diametro-movx) {
-			circulo.style.left = valor + 'px'
+		const diametro = circulo.offsetWidth
+		const der = circulo.offsetLeft
+		if (der+diametro+movement+24<ancho) {
+			circulo.style.left = der + movement + 'px'
+		}else{
+			circulo.style.left = ancho - diametro - 24 + 'px'
 		}
 	}
 
 	function moverAbajo(){
 		const diametro = circulo.offsetWidth
 		const alto = container.offsetHeight
-		const movy = alto/diametro
 		const arriba = circulo.offsetTop
-		const valor = arriba + movy
-		if (arriba<alto - diametro - 24 - movy) {
-			circulo.style.top = valor + 'px'
+		if (arriba+diametro+movement+24<alto) {
+			circulo.style.top = arriba + movement + 'px'
 		}else{
 			circulo.style.top = alto - diametro - 24 + 'px'
+		}
+	}
+	function cambiarColor(color){
+		circulo.style.background = color
+	}
+	function colorAleatorio(){
+		const random = Math.floor(Math.random() * 3)
+		if (random === 0) {
+			cambiarColor('red')
+		}
+		if (random === 1) {
+			cambiarColor('blue')
+		}
+		if (random === 2) {
+			cambiarColor('green')
 		}
 	}
 })

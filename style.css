@@ -18,9 +18,9 @@
 	width: 6em;
 	background: red;
 	border-radius: 100%;
-	transition-duration: 0.5s;
 	top: auto;
 	left: auto;
+	-webkit-transition: all 0.2s;
 }
 .colores {
 	position: absolute;
@@ -33,25 +33,37 @@
 	top: 84%;
 	left: 77%;
 }
+.rojo:hover .verde:hover .azul:hover{
+	cursor: pointer;
+}
+.rojo:active{
+	background: pink;
+}
+.verde:active{
+	background: pink;
+}
+.azul:active{
+	background: pink;
+}
 .rojo{
 	background: red;
 	border-radius: 100%;
-	width: 5em;
-	height: 5em;
+	width: 4em;
+	height: 4em;
 	cursor: pointer;
 }
 .verde{
 	background: green;
 	border-radius: 100%;
-	width: 5em;
-	height: 5em;
+	width: 4em;
+	height: 4em;
 	cursor: pointer;
 }
 .azul{
 	background: blue;
 	border-radius: 100%;
-	width: 5em;
-	height: 5em;
+	width: 4em;
+	height: 4em;
 	cursor: pointer;
 }
 .tablero{
@@ -63,6 +75,12 @@
 	left: 80%;
 	align-items: flex-end;
 	justify-content: center;
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 .boton{
 	background: black;
@@ -73,8 +91,13 @@
 	align-items: center;
 	justify-content: center;
 	border-radius: 30%;
-	cursor: pointer;
 	margin-left: 0.1em;
+}
+.boton:hover{
+	cursor: pointer;
+}
+.boton:active{
+	background: grey;
 }
 .up{
 	align-self: flex-start;
