@@ -18,10 +18,11 @@
 	width: 6em;
 	background: red;
 	border-radius: 100%;
-	top: auto;
-	left: auto;
 	-webkit-transition: all 0.2s;
 }
+
+/* CONTROL DE COLORES */
+
 .colores {
 	position: absolute;
 	display: flex;
@@ -33,46 +34,37 @@
 	top: 84%;
 	left: 77%;
 }
-.rojo:hover .verde:hover .azul:hover{
+.colores div{
+	border-radius: 100%;
+	width: 4em;
+	height: 4em;
 	cursor: pointer;
 }
-.rojo:active{
-	background: pink;
+.colores div:hover{
+	cursor: pointer;
 }
-.verde:active{
-	background: pink;
-}
-.azul:active{
+.colores div:active{
 	background: pink;
 }
 .rojo{
 	background: red;
-	border-radius: 100%;
-	width: 4em;
-	height: 4em;
-	cursor: pointer;
 }
 .verde{
 	background: green;
-	border-radius: 100%;
-	width: 4em;
-	height: 4em;
-	cursor: pointer;
 }
 .azul{
 	background: blue;
-	border-radius: 100%;
-	width: 4em;
-	height: 4em;
-	cursor: pointer;
 }
+
+/* CONTROL DE MOVIMIENTOS */
+
 .tablero{
 	position: absolute;
-	display: flex;
 	height: 12%;
 	width: 15%;
 	top: 5%;
 	left: 80%;
+	display: flex;
 	align-items: flex-end;
 	justify-content: center;
 	-webkit-touch-callout: none;
