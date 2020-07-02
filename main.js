@@ -12,77 +12,90 @@ document.addEventListener("DOMContentLoaded", function() {
 	const azul = document.querySelector('.azul')
 	const verde = document.querySelector('.verde')
 
-
 	circulo.style.left = circulo.offsetLeft + 'px'
 	circulo.style.top= circulo.offsetTop + 'px'
 
 	const movement = 50
+	const movDiagonal = 5000
+
+	let vertical = 0
+	let horizontal = 0
+
+	let alea = setInterval(aleatorio,1000)
+	let diag
 
 	// ------------ EVENTOS ----------------//
 
-	left.addEventListener('click', function(){
+	left.addEventListener('click', function(){		// MUEVE A LA IZQUIERDA CON CLICK
+		clearInterval(diag)
+		clearInterval(alea)
 		moverIzquierda()
-		clearInterval(alea)
 	})
-	right.addEventListener('click', function(){
+	right.addEventListener('click', function(){		// MUEVE A LA DERECHA CON CLICK
+		clearInterval(diag)
+		clearInterval(alea)
 		moverDerecha()
-		clearInterval(alea)
 	})
-	down.addEventListener('click', function(){
+	down.addEventListener('click', function(){		// MUEVE ABAJO CON CLICK
+		clearInterval(diag)
+		clearInterval(alea)
 		moverAbajo()
-		clearInterval(alea)
 	})
-	up.addEventListener('click', function(){
+	up.addEventListener('click', function(){		// MUEVE ARRIBA CON CLICK
+		clearInterval(diag)
+		clearInterval(alea)
 		moverArriba()
-		clearInterval(alea)
 	})
-
-	document.addEventListener('keydown', function (event) {
+	document.addEventListener('keydown',function(e){// MUEVE EL CIRCULO CON LAS FLECHAS
+		clearInterval(diag)
 		clearInterval(alea)
-		const codigo = event.keyCode
-		if (codigo===37) {							// IZQUIERDA
+		const codigo = e.keyCode
+		if (codigo===37) {			// IZQUIERDA
 			moverIzquierda()
 		}
-		if (codigo===38) {							// ARRIBA
+		if (codigo===38) {			// ARRIBA
 			moverArriba()
 		}
-		if (codigo===39) {							// DERECHA
+		if (codigo===39) {			// DERECHA
 			moverDerecha()
 		}
-		if (codigo===40) {							// ABAJO
+		if (codigo===40) {			// ABAJO
 			moverAbajo()
 		}
 	})
-	document.addEventListener('keydown', function (event) {
+	document.addEventListener('keydown',function(e){// MUEVE ALEATORIO DE A UNA VEZ CON LA BARRA ESPACIADORA
+		clearInterval(diag)
 		clearInterval(alea)
-		const codigo = event.keyCode
+		const codigo = e.keyCode
 		if (codigo===32) {
 			aleatorio()
 		}
 	})
-	document.addEventListener('keydown', function (event) {
+	document.addEventListener('keydown',function(e){// MODO ALEATORIO AL APRETAR ENTER
+		clearInterval(diag)
 		clearInterval(alea)
-		const codigo = event.keyCode
+		const codigo = e.keyCode
 		if (codigo===13) {
-			alea = setInterval(aleatorio,500)
+			alea = setInterval(aleatorio,1000)
 		}
 	})
-
-	rojo.addEventListener('click', function(){
+	rojo.addEventListener('click', function(){		// CAMBIO DE COLOR ROJO
 		cambiarColor('red')
 	})
-	verde.addEventListener('click', function(){
+	verde.addEventListener('click', function(){		// CAMBIO DE COLOR VERDE
 		cambiarColor('green')
 	})
-	azul.addEventListener('click', function(){
+	azul.addEventListener('click', function(){		// CAMBIO DE COLOR AZUL
 		cambiarColor('blue')
+	})
+	circulo.addEventListener('click', function(){	// ESTADO DE MOVIMIENTOS DIAGONALES
+		clearInterval(alea)
+		diag = setInterval(diagonal,1000)
 	})
 
 	// ------------ FUNCIONES ----------------//
 
-	let alea = setInterval(aleatorio,500)			// FUNCION INICIAL (ALEATORIO)
-
-	function aleatorio(){
+	function aleatorio(){							// FUNCION MOVIMIENTO ALEATORIO
 		const random = Math.floor(Math.random() * 4)
 		if (random === 0) {
 			moverIzquierda()
@@ -98,8 +111,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		}
 		colorAleatorio()
 	}
-
-	function moverIzquierda(){
+	function moverIzquierda(){						// MOVER A LA IZQUIERDA
 		const izq = circulo.offsetLeft
 		if (izq>movement) {
 			circulo.style.left = izq - movement + 'px'
@@ -107,8 +119,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			circulo.style.left= '0px'
 		}
 	}
-
-	function moverArriba(){
+	function moverArriba(){							// MOVER ARRIBA
 		const arriba = circulo.offsetTop
 		if (arriba>movement) {
 			circulo.style.top = arriba - movement + 'px'
@@ -116,8 +127,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			circulo.style.top= '0px'
 		}
 	}
-
-	function moverDerecha(){
+	function moverDerecha(){						// MOVER A LA DERECHA
 		const ancho = container.offsetWidth
 		const diametro = circulo.offsetWidth
 		const der = circulo.offsetLeft
@@ -127,8 +137,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			circulo.style.left = ancho - diametro - 24 + 'px'
 		}
 	}
-
-	function moverAbajo(){
+	function moverAbajo(){							// MOVER ABAJO
 		const diametro = circulo.offsetWidth
 		const alto = container.offsetHeight
 		const arriba = circulo.offsetTop
@@ -138,10 +147,10 @@ document.addEventListener("DOMContentLoaded", function() {
 			circulo.style.top = alto - diametro - 24 + 'px'
 		}
 	}
-	function cambiarColor(color){
+	function cambiarColor(color){					// CAMBIAR DE COLOR
 		circulo.style.background = color
 	}
-	function colorAleatorio(){
+	function colorAleatorio(){						// CAMBIO DE COLOR ALEATORIO
 		const random = Math.floor(Math.random() * 3)
 		if (random === 0) {
 			cambiarColor('red')
@@ -153,4 +162,122 @@ document.addEventListener("DOMContentLoaded", function() {
 			cambiarColor('green')
 		}
 	}
+	function arribaDerecha(){						// DIAGONAL ARRIBA DERECHA
+		const ancho = container.offsetWidth
+		const largo = circulo.offsetLeft
+		const arriba = circulo.offsetTop
+		const diametro = circulo.offsetWidth
+		const distanciaTecho = arriba
+		const distanciaPared = ancho - largo - diametro - 24
+		let techoPrimero = false
+		if (movDiagonal>=distanciaTecho || movDiagonal>=distanciaPared) {
+			if (distanciaTecho<=distanciaPared) {
+				techoPrimero = true
+			}
+			if (techoPrimero) {
+				circulo.style.top = arriba - distanciaTecho + 'px'
+				circulo.style.left = largo + distanciaTecho + 'px'
+				vertical = 0
+			}else{
+				circulo.style.top = arriba - distanciaPared + 'px'
+				circulo.style.left = largo + distanciaPared + 'px'
+				horizontal = 1
+			}		
+		}else{
+			circulo.style.top = arriba - movDiagonal+ 'px'
+			circulo.style.left = largo + movDiagonal + 'px'
+		}
+	}
+	function arribaIzquierda(){						// DIAGONAL ARRIBA IZQUIERDA
+		const largo = circulo.offsetLeft
+		const arriba = circulo.offsetTop
+		const distanciaTecho = arriba
+		const distanciaPared = largo
+		let techoPrimero = false
+		if (movDiagonal>=distanciaTecho || movDiagonal>=distanciaPared) {
+			if (distanciaTecho<=distanciaPared) {
+				techoPrimero = true
+			}
+			if (techoPrimero) {
+				circulo.style.top = arriba - distanciaTecho + 'px'
+				circulo.style.left = largo - distanciaTecho + 'px'
+				vertical = 0
+			}else{
+				circulo.style.top = arriba - distanciaPared + 'px'
+				circulo.style.left = largo - distanciaPared + 'px'
+				horizontal = 0
+			}		
+		}else{
+			circulo.style.top = arriba - movDiagonal+ 'px'
+			circulo.style.left = largo - movDiagonal + 'px'
+		}
+	}
+	function abajoDerecha(){						// DIAGONAL ABAJO DERECHA
+		const alto = container.offsetHeight
+		const ancho = container.offsetWidth
+		const largo = circulo.offsetLeft
+		const arriba = circulo.offsetTop
+		const diametro = circulo.offsetWidth
+		const distanciaPiso = alto - arriba - diametro - 24
+		const distanciaPared = ancho - largo - diametro - 24
+		let pisoPrimero = false
+		if (movDiagonal>=distanciaPiso || movDiagonal>=distanciaPared) {
+			if (distanciaPiso-distanciaPared<=0) {
+				pisoPrimero = true
+			}
+			if (pisoPrimero) {
+				circulo.style.top = arriba + distanciaPiso + 'px'
+				circulo.style.left = largo + distanciaPiso + 'px'
+				vertical = 1
+			}else{
+				circulo.style.top = arriba + distanciaPared + 'px'
+				circulo.style.left = largo + distanciaPared + 'px'
+				horizontal = 1
+			}		
+		}else{
+			circulo.style.top = arriba + movDiagonal + 'px'
+			circulo.style.left = largo + movDiagonal + 'px'
+		}
+	}
+	function abajoIzquierda(){						// DIAGONAL ABAJO IZQUIERDA
+		const alto = container.offsetHeight
+		const largo = circulo.offsetLeft
+		const arriba = circulo.offsetTop
+		const diametro = circulo.offsetWidth
+		const distanciaPiso = alto - arriba - diametro - 24
+		const distanciaPared = largo
+		let pisoPrimero = false
+		if (movDiagonal>=distanciaPiso || movDiagonal>=distanciaPared) {
+			if (distanciaPiso<=distanciaPared) {
+				pisoPrimero = true
+			}
+			if (pisoPrimero) {
+				circulo.style.top = arriba + distanciaPiso + 'px'
+				circulo.style.left = largo - distanciaPiso + 'px'
+				vertical = 1
+			}else{
+				circulo.style.top = arriba + distanciaPared + 'px'
+				circulo.style.left = largo - distanciaPared + 'px'
+				horizontal = 0
+			}		
+		}else{
+			circulo.style.top = arriba + movDiagonal+ 'px'
+			circulo.style.left = largo - movDiagonal + 'px'
+		}
+	}
+	function diagonal(){							// DECISION MOVIMIENTO DIAGONAL
+		if (vertical === 0 && horizontal === 0) {
+			return abajoDerecha()
+		}
+		if (vertical === 1 && horizontal === 0) {
+			return arribaDerecha()
+		}
+		if (vertical ===1 && horizontal === 1) {
+			return arribaIzquierda()
+		}
+		if (vertical === 0 && horizontal === 1) {
+			return abajoIzquierda()
+		}
+	}
 })
+
