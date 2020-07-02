@@ -12,85 +12,90 @@ document.addEventListener("DOMContentLoaded", function() {
 	const azul = document.querySelector('.azul')
 	const verde = document.querySelector('.verde')
 
-
 	circulo.style.left = circulo.offsetLeft + 'px'
 	circulo.style.top= circulo.offsetTop + 'px'
 
 	const movement = 50
+	const movDiagonal = 5000
 
-	let d = 0
+	let vertical = 0
+	let horizontal = 0
+
+	let alea = setInterval(aleatorio,1000)
+	let diag
 
 	// ------------ EVENTOS ----------------//
 
-	// left.addEventListener('click', function(){
-	// 	moverIzquierda()
-	// 	clearInterval(alea)
-	// })
-	// right.addEventListener('click', function(){
-	// 	moverDerecha()
-	// 	clearInterval(alea)
-	// })
-	// down.addEventListener('click', function(){
-	// 	moverAbajo()
-	// 	clearInterval(alea)
-	// })
-	// up.addEventListener('click', function(){
-	// 	moverArriba()
-	// 	clearInterval(alea)
-	// })
-
-	// document.addEventListener('keydown', function (event) {
-	// 	clearInterval(alea)
-	// 	const codigo = event.keyCode
-	// 	if (codigo===37) {							// IZQUIERDA
-	// 		moverIzquierda()
-	// 		let valor = circulo.getBoundingClientRect()
-	// 	}
-	// 	if (codigo===38) {							// ARRIBA
-	// 		moverArriba()
-	// 		let valor = circulo.getBoundingClientRect()
-	// 	}
-	// 	if (codigo===39) {							// DERECHA
-	// 		moverDerecha()
-	// 		let valor = circulo.getBoundingClientRect()
-	// 	}
-	// 	if (codigo===40) {							// ABAJO
-	// 		moverAbajo()
-	// 		let valor = circulo.getBoundingClientRect()
-	// 	}
-	// })
-	// document.addEventListener('keydown', function (event) {
-	// 	clearInterval(alea)
-	// 	const codigo = event.keyCode
-	// 	if (codigo===32) {
-	// 		aleatorio()
-	// 	}
-	// })
-	// document.addEventListener('keydown', function (event) {
-	// 	clearInterval(alea)
-	// 	const codigo = event.keyCode
-	// 	if (codigo===13) {
-	// 		alea = setInterval(aleatorio,500)
-	// 	}
-	// })
-
-	// rojo.addEventListener('click', function(){
-	// 	cambiarColor('red')
-	// })
-	// verde.addEventListener('click', function(){
-	// 	cambiarColor('green')
-	// })
-	// azul.addEventListener('click', function(){
-	// 	cambiarColor('blue')
-	// })
+	left.addEventListener('click', function(){		// MUEVE A LA IZQUIERDA CON CLICK
+		clearInterval(diag)
+		clearInterval(alea)
+		moverIzquierda()
+	})
+	right.addEventListener('click', function(){		// MUEVE A LA DERECHA CON CLICK
+		clearInterval(diag)
+		clearInterval(alea)
+		moverDerecha()
+	})
+	down.addEventListener('click', function(){		// MUEVE ABAJO CON CLICK
+		clearInterval(diag)
+		clearInterval(alea)
+		moverAbajo()
+	})
+	up.addEventListener('click', function(){		// MUEVE ARRIBA CON CLICK
+		clearInterval(diag)
+		clearInterval(alea)
+		moverArriba()
+	})
+	document.addEventListener('keydown',function(e){// MUEVE EL CIRCULO CON LAS FLECHAS
+		clearInterval(diag)
+		clearInterval(alea)
+		const codigo = e.keyCode
+		if (codigo===37) {			// IZQUIERDA
+			moverIzquierda()
+		}
+		if (codigo===38) {			// ARRIBA
+			moverArriba()
+		}
+		if (codigo===39) {			// DERECHA
+			moverDerecha()
+		}
+		if (codigo===40) {			// ABAJO
+			moverAbajo()
+		}
+	})
+	document.addEventListener('keydown',function(e){// MUEVE ALEATORIO DE A UNA VEZ CON LA BARRA ESPACIADORA
+		clearInterval(diag)
+		clearInterval(alea)
+		const codigo = e.keyCode
+		if (codigo===32) {
+			aleatorio()
+		}
+	})
+	document.addEventListener('keydown',function(e){// MODO ALEATORIO AL APRETAR ENTER
+		clearInterval(diag)
+		clearInterval(alea)
+		const codigo = e.keyCode
+		if (codigo===13) {
+			alea = setInterval(aleatorio,1000)
+		}
+	})
+	rojo.addEventListener('click', function(){		// CAMBIO DE COLOR ROJO
+		cambiarColor('red')
+	})
+	verde.addEventListener('click', function(){		// CAMBIO DE COLOR VERDE
+		cambiarColor('green')
+	})
+	azul.addEventListener('click', function(){		// CAMBIO DE COLOR AZUL
+		cambiarColor('blue')
+	})
+	circulo.addEventListener('click', function(){	// ESTADO DE MOVIMIENTOS DIAGONALES
+		clearInterval(alea)
+		diag = setInterval(diagonal,1000)
+	})
 
 	// ------------ FUNCIONES ----------------//
 
-	// let alea = setInterval(aleatorio,500)			// FUNCION INICIAL (ALEATORIO)
-
-	const diag = setInterval(diagonal,500)
-
-	function aleatorio(){
+	function aleatorio(){							// FUNCION MOVIMIENTO ALEATORIO
 		const random = Math.floor(Math.random() * 4)
 		if (random === 0) {
 			moverIzquierda()
@@ -106,54 +111,46 @@ document.addEventListener("DOMContentLoaded", function() {
 		}
 		colorAleatorio()
 	}
-	function moverIzquierda(){
+	function moverIzquierda(){						// MOVER A LA IZQUIERDA
 		const izq = circulo.offsetLeft
 		if (izq>movement) {
 			circulo.style.left = izq - movement + 'px'
-			d = 0
 		}else{
 			circulo.style.left= '0px'
-			d = 4
 		}
 	}
-	function moverArriba(){
+	function moverArriba(){							// MOVER ARRIBA
 		const arriba = circulo.offsetTop
 		if (arriba>movement) {
 			circulo.style.top = arriba - movement + 'px'
-			d = 0
 		}else{
 			circulo.style.top= '0px'
-			d = 3
 		}
 	}
-	function moverDerecha(){
+	function moverDerecha(){						// MOVER A LA DERECHA
 		const ancho = container.offsetWidth
 		const diametro = circulo.offsetWidth
 		const der = circulo.offsetLeft
 		if (der+diametro+movement+24<ancho) {
 			circulo.style.left = der + movement + 'px'
-			d = 0
 		}else{
 			circulo.style.left = ancho - diametro - 24 + 'px'
-			d = 2
 		}
 	}
-	function moverAbajo(){
+	function moverAbajo(){							// MOVER ABAJO
 		const diametro = circulo.offsetWidth
 		const alto = container.offsetHeight
 		const arriba = circulo.offsetTop
 		if (arriba+diametro+movement+24<alto) {
 			circulo.style.top = arriba + movement + 'px'
-			d = 0
 		}else{
 			circulo.style.top = alto - diametro - 24 + 'px'
-			d = 1
 		}
 	}
-	function cambiarColor(color){
+	function cambiarColor(color){					// CAMBIAR DE COLOR
 		circulo.style.background = color
 	}
-	function colorAleatorio(){
+	function colorAleatorio(){						// CAMBIO DE COLOR ALEATORIO
 		const random = Math.floor(Math.random() * 3)
 		if (random === 0) {
 			cambiarColor('red')
@@ -165,47 +162,122 @@ document.addEventListener("DOMContentLoaded", function() {
 			cambiarColor('green')
 		}
 	}
-
-	let a = moverAbajo()
-	let b = moverDerecha()
-
-	function diagonal(){
-		switch(d){
-			case 1:
-				a = moverArriba()
-				console.log(1)
-			break
-			case 2:
-				b = moverIzquierda()
-				console.log(2)
-			break
-			case 3:
-				a = moverAbajo()
-				console.log(3)
-			break
-			case 4:
-				b = moverDerecha()
-				console.log(4)
-			break
+	function arribaDerecha(){						// DIAGONAL ARRIBA DERECHA
+		const ancho = container.offsetWidth
+		const largo = circulo.offsetLeft
+		const arriba = circulo.offsetTop
+		const diametro = circulo.offsetWidth
+		const distanciaTecho = arriba
+		const distanciaPared = ancho - largo - diametro - 24
+		let techoPrimero = false
+		if (movDiagonal>=distanciaTecho || movDiagonal>=distanciaPared) {
+			if (distanciaTecho<=distanciaPared) {
+				techoPrimero = true
+			}
+			if (techoPrimero) {
+				circulo.style.top = arriba - distanciaTecho + 'px'
+				circulo.style.left = largo + distanciaTecho + 'px'
+				vertical = 0
+			}else{
+				circulo.style.top = arriba - distanciaPared + 'px'
+				circulo.style.left = largo + distanciaPared + 'px'
+				horizontal = 1
+			}		
+		}else{
+			circulo.style.top = arriba - movDiagonal+ 'px'
+			circulo.style.left = largo + movDiagonal + 'px'
+		}
+	}
+	function arribaIzquierda(){						// DIAGONAL ARRIBA IZQUIERDA
+		const largo = circulo.offsetLeft
+		const arriba = circulo.offsetTop
+		const distanciaTecho = arriba
+		const distanciaPared = largo
+		let techoPrimero = false
+		if (movDiagonal>=distanciaTecho || movDiagonal>=distanciaPared) {
+			if (distanciaTecho<=distanciaPared) {
+				techoPrimero = true
+			}
+			if (techoPrimero) {
+				circulo.style.top = arriba - distanciaTecho + 'px'
+				circulo.style.left = largo - distanciaTecho + 'px'
+				vertical = 0
+			}else{
+				circulo.style.top = arriba - distanciaPared + 'px'
+				circulo.style.left = largo - distanciaPared + 'px'
+				horizontal = 0
+			}		
+		}else{
+			circulo.style.top = arriba - movDiagonal+ 'px'
+			circulo.style.left = largo - movDiagonal + 'px'
+		}
+	}
+	function abajoDerecha(){						// DIAGONAL ABAJO DERECHA
+		const alto = container.offsetHeight
+		const ancho = container.offsetWidth
+		const largo = circulo.offsetLeft
+		const arriba = circulo.offsetTop
+		const diametro = circulo.offsetWidth
+		const distanciaPiso = alto - arriba - diametro - 24
+		const distanciaPared = ancho - largo - diametro - 24
+		let pisoPrimero = false
+		if (movDiagonal>=distanciaPiso || movDiagonal>=distanciaPared) {
+			if (distanciaPiso-distanciaPared<=0) {
+				pisoPrimero = true
+			}
+			if (pisoPrimero) {
+				circulo.style.top = arriba + distanciaPiso + 'px'
+				circulo.style.left = largo + distanciaPiso + 'px'
+				vertical = 1
+			}else{
+				circulo.style.top = arriba + distanciaPared + 'px'
+				circulo.style.left = largo + distanciaPared + 'px'
+				horizontal = 1
+			}		
+		}else{
+			circulo.style.top = arriba + movDiagonal + 'px'
+			circulo.style.left = largo + movDiagonal + 'px'
+		}
+	}
+	function abajoIzquierda(){						// DIAGONAL ABAJO IZQUIERDA
+		const alto = container.offsetHeight
+		const largo = circulo.offsetLeft
+		const arriba = circulo.offsetTop
+		const diametro = circulo.offsetWidth
+		const distanciaPiso = alto - arriba - diametro - 24
+		const distanciaPared = largo
+		let pisoPrimero = false
+		if (movDiagonal>=distanciaPiso || movDiagonal>=distanciaPared) {
+			if (distanciaPiso<=distanciaPared) {
+				pisoPrimero = true
+			}
+			if (pisoPrimero) {
+				circulo.style.top = arriba + distanciaPiso + 'px'
+				circulo.style.left = largo - distanciaPiso + 'px'
+				vertical = 1
+			}else{
+				circulo.style.top = arriba + distanciaPared + 'px'
+				circulo.style.left = largo - distanciaPared + 'px'
+				horizontal = 0
+			}		
+		}else{
+			circulo.style.top = arriba + movDiagonal+ 'px'
+			circulo.style.left = largo - movDiagonal + 'px'
+		}
+	}
+	function diagonal(){							// DECISION MOVIMIENTO DIAGONAL
+		if (vertical === 0 && horizontal === 0) {
+			return abajoDerecha()
+		}
+		if (vertical === 1 && horizontal === 0) {
+			return arribaDerecha()
+		}
+		if (vertical ===1 && horizontal === 1) {
+			return arribaIzquierda()
+		}
+		if (vertical === 0 && horizontal === 1) {
+			return abajoIzquierda()
 		}
 	}
 })
 
-/*
-
-	1 : toca abajo
-	2 : toca derecha
-	3 : toca arriba
-	4 : toca izquierda
-
-	ABAJO-DERECHA
-	ARRIBA-DERECHA
-	ARRIBA-IZQUIERDA
-	ABAJO-IZQUIERDA
-
-	BORDE DE ABAJO: TOP:456
-	BORDE DE ARRIBA: TOP:12
-	BORDE DERECHO: LEFT:1285
-	BORDE IZQUIERDO: LEFT:12
-
-*/

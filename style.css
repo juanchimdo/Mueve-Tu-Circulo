@@ -19,7 +19,11 @@
 	width: 6em;
 	background: red;
 	border-radius: 100%;
-	-webkit-transition: all 0.2s;
+	-webkit-transition: all 0.5s;
+	-webkit-transition-timing-function: ease;	
+}
+.circulo:hover{
+	cursor: pointer;
 }
 .columna{
 	height: 100%;
