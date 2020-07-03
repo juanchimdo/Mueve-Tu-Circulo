@@ -2,7 +2,8 @@ let vertical = 0
 let horizontal = 0
 let alea
 let diag
-const movement = 50
+const movement = 100
+let colores2
 
 document.addEventListener("DOMContentLoaded", function() {
 	
@@ -23,22 +24,22 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	// ------------ EVENTOS ----------------//
 
-	left.addEventListener('click', function(){		// MUEVE A LA IZQUIERDA CON CLICK
+	left.addEventListener('click',function(){		// MUEVE A LA IZQUIERDA CON CLICK
 		clearInterval(diag)
 		clearInterval(alea)
 		moverIzquierda(circulo)
 	})
-	right.addEventListener('click', function(){		// MUEVE A LA DERECHA CON CLICK
+	right.addEventListener('click',function(){		// MUEVE A LA DERECHA CON CLICK
 		clearInterval(diag)
 		clearInterval(alea)
 		moverDerecha(circulo, container)
 	})
-	down.addEventListener('click', function(){		// MUEVE ABAJO CON CLICK
+	down.addEventListener('click',function(){		// MUEVE ABAJO CON CLICK
 		clearInterval(diag)
 		clearInterval(alea)
 		moverAbajo(circulo, container)
 	})
-	up.addEventListener('click', function(){		// MUEVE ARRIBA CON CLICK
+	up.addEventListener('click',function(){		// MUEVE ARRIBA CON CLICK
 		clearInterval(diag)
 		clearInterval(alea)
 		moverArriba(circulo)
@@ -95,19 +96,53 @@ document.addEventListener("DOMContentLoaded", function() {
 			alea = window.setInterval(aleatorio,1000,circulo, container)
 		}
 	})
-	rojo.addEventListener('click', function(){		// CAMBIO DE COLOR ROJO
+	rojo.addEventListener('click',function(){		// CAMBIO DE COLOR ROJO
 		cambiarColor(circulo, 'red')
 	})
-	verde.addEventListener('click', function(){		// CAMBIO DE COLOR VERDE
+	verde.addEventListener('click',function(){		// CAMBIO DE COLOR VERDE
 		cambiarColor(circulo, 'green')
 	})
-	azul.addEventListener('click', function(){		// CAMBIO DE COLOR AZUL
+	azul.addEventListener('click',function(){		// CAMBIO DE COLOR AZUL
 		cambiarColor(circulo, 'blue')
 	})
-	circulo.addEventListener('click', function(){	// ESTADO DE MOVIMIENTOS DIAGONALES
+	circulo.addEventListener('click',function(){	// ESTADO DE MOVIMIENTOS DIAGONALES
 		clearInterval(alea)
 		clearInterval(diag)
-		diag = window.setInterval(diagonal,1000)
+		diag = window.setInterval(diagonal,750)
+	})
+	document.addEventListener('keydown',function(e){
+		if (e.keyCode===72) {
+			const d = window.setTimeout(parar,5000)	
+			const colores1 = window.setInterval(color1,100)
+			window.setTimeout(disparo,50)
+			function disparo(){
+				colores2 = window.setInterval(color2,100)
+			}	
+			function color1(){
+				document.querySelector('.columna').style.display = 'none'
+				container.style.border = 'solid 12px white'
+				container.style.background = 'blue'
+				circulo.style.background = 'white'
+				circulo.style.transition = 'all 0.25s'
+			}
+			function color2(){
+				container.style.border = 'solid 12px black'
+				container.style.background = 'blue'
+				circulo.style.background = 'black'
+			}
+			function normalidad(){
+				container.style.border = 'solid 12px violet'
+				container.style.background = 'white'
+				circulo.style.background = 'red'
+				document.querySelector('.columna').style.display = 'flex'
+				circulo.style.transition = 'all 0.5s'
+			}
+			function parar(){
+				window.clearInterval(colores1)
+				window.clearInterval(colores2)
+				normalidad()
+			}
+		}
 	})
 
 	// ------------ FUNCIONES ----------------//

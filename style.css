@@ -20,7 +20,7 @@
 	background: red;
 	border-radius: 100%;
 	-webkit-transition: all 0.5s;
-	-webkit-transition-timing-function: ease;	
+	-webkit-transition-timing-function: linear;	
 }
 .circulo:hover{
 	cursor: pointer;
