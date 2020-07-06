@@ -15,11 +15,11 @@
 }
 .circulo {
 	position: absolute;
-	height: 6em;
-	width: 6em;
+	height: 96px;
+	width: 96px;
 	background: red;
 	border-radius: 100%;
-	-webkit-transition: all 0.5s;
+	-webkit-transition: all 0.25s;
 	-webkit-transition-timing-function: linear;	
 }
 .circulo:hover{
@@ -50,8 +50,8 @@
 }
 .colores div{
 	border-radius: 100%;
-	width: 4em;
-	height: 4em;
+	width: 4rem;
+	height: 4rem;
 	cursor: pointer;
 }
 .colores div:hover{
@@ -92,8 +92,8 @@
 .boton{
 	background: black;
 	color: white;
-	width: 3em;
-	height: 3em;
+	width: 3rem;
+	height: 3rem;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -103,6 +103,9 @@
 	cursor: pointer;
 }
 .boton:active{
+	background: grey;
+}
+.activo{
 	background: grey;
 }
 .up{

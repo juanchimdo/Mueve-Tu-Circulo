@@ -2,10 +2,11 @@ let vertical = 0
 let horizontal = 0
 let alea
 let diag
-const movement = 100
+let colores1
 let colores2
+const movement = 50
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded",function(){
 	
 	// ------------ VARIABLES ----------------//
 	
@@ -39,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		clearInterval(alea)
 		moverAbajo(circulo, container)
 	})
-	up.addEventListener('click',function(){		// MUEVE ARRIBA CON CLICK
+	up.addEventListener('click',function(){			// MUEVE ARRIBA CON CLICK
 		clearInterval(diag)
 		clearInterval(alea)
 		moverArriba(circulo)
@@ -50,35 +51,35 @@ document.addEventListener("DOMContentLoaded", function() {
 			clearInterval(alea)
 			if (e.keyCode===37) {			// IZQUIERDA
 				moverIzquierda(circulo)
-				left.style.background='grey'
+				left.classList.add('activo')
 			}
 			if (e.keyCode===38) {			// ARRIBA
 				moverArriba(circulo)
-				up.style.background='grey'
+				up.classList.add('activo')
 			}
 			if (e.keyCode===39) {			// DERECHA
 				moverDerecha(circulo, container)
-				right.style.background='grey'
+				right.classList.add('activo')
 			}
 			if (e.keyCode===40) {			// ABAJO
 				moverAbajo(circulo, container)
-				down.style.background='grey'
+				down.classList.add('activo')
 			}			
 		}
 	})
 	document.addEventListener('keyup',function(e){	// VUELVE LAS FLECHAS AL COLOR ORIGINAL
 		if (e.keyCode===37||e.keyCode===38||e.keyCode===39||e.keyCode===40) {
-			if (e.keyCode===37) {			// IZQUIERDA
-				left.style.background='black'
+			if (e.keyCode===37){			// IZQUIERDA
+				left.classList.toggle('activo')
 			}
-			if (e.keyCode===38) {			// ARRIBA
-				up.style.background='black'
+			if (e.keyCode===38){			// ARRIBA
+				up.classList.toggle('activo')
 			}
-			if (e.keyCode===39) {			// DERECHA
-				right.style.background='black'
+			if (e.keyCode===39){			// DERECHA
+				right.classList.toggle('activo')
 			}
-			if (e.keyCode===40) {			// ABAJO
-				down.style.background='black'
+			if (e.keyCode===40){			// ABAJO
+				down.classList.toggle('activo')
 			}			
 		}
 	})
@@ -112,8 +113,8 @@ document.addEventListener("DOMContentLoaded", function() {
 	})
 	document.addEventListener('keydown',function(e){
 		if (e.keyCode===72) {
-			const d = window.setTimeout(parar,5000)	
-			const colores1 = window.setInterval(color1,100)
+			window.setTimeout(parar,5000)	
+			colores1 = window.setInterval(color1,100)
 			window.setTimeout(disparo,50)
 			function disparo(){
 				colores2 = window.setInterval(color2,100)
@@ -127,7 +128,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			}
 			function color2(){
 				container.style.border = 'solid 12px black'
-				container.style.background = 'blue'
+				container.style.background = 'red'
 				circulo.style.background = 'black'
 			}
 			function normalidad(){
@@ -196,7 +197,7 @@ function colorAleatorio(circ){						// CAMBIO DE COLOR ALEATORIO
 }
 function moverIzquierda(circ){						// MOVER A LA IZQUIERDA
 	const distanciaIzquierda = circ.offsetLeft
-	if (distanciaIzquierda>movement) {
+	if (distanciaIzquierda>movement){
 		circ.style.left = distanciaIzquierda - movement + 'px'
 	}else{
 		circ.style.left= '0px'
@@ -204,7 +205,7 @@ function moverIzquierda(circ){						// MOVER A LA IZQUIERDA
 }
 function moverArriba(circ){							// MOVER ARRIBA
 	const distanciaTecho = circ.offsetTop
-	if (distanciaTecho>movement) {
+	if (distanciaTecho>movement){
 		circ.style.top = distanciaTecho - movement + 'px'
 	}else{
 		circ.style.top= '0px'
@@ -213,7 +214,7 @@ function moverArriba(circ){							// MOVER ARRIBA
 function moverDerecha(circ, cont){					// MOVER A LA DERECHA
 	const distanciaIzquierda = circ.offsetLeft
 	const distanciaDerecha = cont.offsetWidth - circ.offsetWidth - distanciaIzquierda - 24
-	if (distanciaDerecha>movement) {
+	if (distanciaDerecha>movement){
 		circ.style.left = distanciaIzquierda + movement + 'px'
 	}else{
 		circ.style.left = distanciaIzquierda + distanciaDerecha + 'px'
@@ -222,7 +223,7 @@ function moverDerecha(circ, cont){					// MOVER A LA DERECHA
 function moverAbajo(circ, cont){					// MOVER ABAJO
 	const distanciaTecho = circ.offsetTop
 	const distanciaPiso = cont.offsetHeight - distanciaTecho - circ.offsetWidth - 24
-	if (distanciaPiso>movement) {
+	if (distanciaPiso>movement){
 		circ.style.top = distanciaTecho + movement + 'px'
 	}else{
 		circ.style.top = distanciaTecho + distanciaPiso + 'px'
@@ -274,13 +275,13 @@ function abajoIzquierda(circ, cont){				// DIAGONAL ABAJO IZQUIERDA
 	const distanciaIzquierda = circ.offsetLeft
 	const distanciaTecho = circ.offsetTop
 	const distanciaPiso = cont.offsetHeight - distanciaTecho - circ.offsetWidth - 24
-		if (distanciaPiso<=distanciaIzquierda) {
-			circ.style.top = distanciaTecho + distanciaPiso + 'px'
-			circ.style.left = distanciaIzquierda - distanciaPiso + 'px'
-			vertical = 1
-		}else{
-			circ.style.top = distanciaTecho + distanciaIzquierda + 'px'
-			circ.style.left = 0 + 'px'
-			horizontal = 0
-		}
+	if (distanciaPiso<=distanciaIzquierda) {
+		circ.style.top = distanciaTecho + distanciaPiso + 'px'
+		circ.style.left = distanciaIzquierda - distanciaPiso + 'px'
+		vertical = 1
+	}else{
+		circ.style.top = distanciaTecho + distanciaIzquierda + 'px'
+		circ.style.left = 0 + 'px'
+		horizontal = 0
+	}
 }
